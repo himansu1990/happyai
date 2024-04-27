@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="happy-ai.png"/>
+  <title>Happy AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+  .card{
+    display: none;
+    margin-bottom: 1em;
+  }
+  .spinner-grow{
+    display: none;
+  }
+  .padding-top{
+    margin-top: 1em;
+  }
+</style>
+</head>
+<body>
+  
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+  </script>
+  <script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyCluujww9ib99Nwzr-5dJf6AflOrPFjfSE";
+
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+
+    // ...
+
+    const model = genAI.getGenerativeModel({ model: "TEXT_NAME"});
+
+    // ...
+export const aiDiv = (aidata) => {
+  return `<div><pre>${aidata}</pre></div>`
+} 
+const aiTxt = document.querySelector('#aitxt')
+const userChat = document.querySelector('#userchat') 
+let spinnerGrow = document.querySelector('.spinner-grow')
+let myText = document.querySelector('#myText')
+async function run() {
+// For text-only input, use the gemini-pro model
+const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+const prompt = document.querySelector('#myText').value
+
+const result = await model.generateContent(prompt);
+const response = await result.response;
+const text = response.text();
+console.log(text);
+userChat.innerHTML += prompt
+aiTxt.innerHTML += aiDiv(text)
+if(text.includes('*' || '**' || '***')){
+  aiTxt.innerHTML = `${aiDiv(text)} <br> If you are seeing *, please try a shorter prmopt `
+}
+else{
+  aiTxt.innerHTML = aiDiv(text)
+
+}
+}
+
+function showLoading(){
+  spinnerGrow.style.display = 'block'
+}
+function hideLoading(){
+  spinnerGrow.style.display = 'none'
+}
+
+// Function to handle button click
+// window.generateContent = function() {
+//     run(); // Call the 'run' function to generate content
+//   };
+  let btnSubmit = document.querySelector('.btnsubmit')
+  btnSubmit.addEventListener('click', function(e){
+    e.preventDefault()
+    showLoading()
+    setTimeout(function(){
+hideLoading()
+run()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+    }, 2000)
+   
+  })
+
+ let inputValue = document.querySelector('#myText')
+  inputValue.addEventListener('keypress', function(e){
+    if(event.key === 'Enter'){
+    e.preventDefault()
+ showLoading()
+ setTimeout(function(){
+  hideLoading()
+  run()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+ }, 2000)
+   
+    }
+
+  })
+
+  </script>
+  
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container-fluid">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" aria-expanded="false">
+            <img src="happy-ai.png" alt="mdo" width="32" height="32" class="rounded-circle"> <b>Happy AI!</b>
+          </a>
+
+
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>
+Hello!  <small class="text-muted">How can I help?</small>
+</h1>
+
+<div class="spinner-grow" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="card">
+  <div class="card-header">
+    <p id="userchat"></p>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title" id="userchat"></h5>
+    <p class="card-text" id="aitxt"></p>
+  </div>
+</div>
+
+<div class="mb-3">
+
+  <textarea name="text" class="form-control" id="myText"></textarea>
+</div>
+
+  <button type="submit" class="btn btn-danger btnsubmit">Submit</button><br>
+
+  <p class="padding-top"><small class="text-muted">The information may be inaccurate. 
+    Please verify them before using. The query will be removed once you type another one or refresh the page.</small></p>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
