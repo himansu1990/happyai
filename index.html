@@ -12,12 +12,66 @@
     display: none;
     margin-bottom: 1em;
   }
+  .card-ai{
+    border: 1px solid red;
+    margin: 0.5em;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #dc3545;
+  }
   .spinner-grow{
     display: none;
   }
   .padding-top{
     margin-top: 1em;
   }
+  h1.typed-out{
+  overflow: hidden;
+  border-right: .15em solid orange;
+  white-space: nowrap;
+  animation: typing 2s steps(20, end) forwards, blinking 1s infinite;
+  font-size: 1.6rem;
+  width: 0;
+  margin-bottom: 2em;
+
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 22% }
+}
+
+@keyframes blinking {
+  from { border-color: transparent }
+  to { border-color: orange; }
+}
+
+p.typedtxt{
+  overflow: hidden;
+  /* border-right: .15em solid orange; */
+  white-space: nowrap;
+  animation: typingtext 2s steps(20, end) forwards;
+  /* font-size: 1.6rem; */
+  width: 0;
+  margin-bottom: 2em; 
+}
+
+@keyframes typingtext {
+  from { width: 0 }
+  to { width: 90% }
+}
+.hover-3 {
+  --c: no-repeat linear-gradient(#dc3545 0 0);
+  background: 
+    var(--c)  calc(-101% + var(--p,0%)) 100%,
+    var(--c)  calc( 201% - var(--p,0%)) 0;
+  background-size: 50.1% var(--p,.08em);
+  transition: .3s var(--t,0s), background-position .3s calc(.3s - var(--t,0s));
+}
+.hover-3:hover {
+  --p: 101%;
+  --t: 0.3s;
+  color: #fff;
+}
 </style>
 </head>
 <body>
@@ -51,6 +105,7 @@ const aiTxt = document.querySelector('#aitxt')
 const userChat = document.querySelector('#userchat') 
 let spinnerGrow = document.querySelector('.spinner-grow')
 let myText = document.querySelector('#myText')
+
 async function run() {
 // For text-only input, use the gemini-pro model
 const model = genAI.getGenerativeModel({ model: "gemini-pro"});
@@ -116,8 +171,148 @@ run()
 
   })
 
+
+// Example prmopt 
+let exampleTxt = document.querySelector('#exampletxt')
+let exampleTxt2 = document.querySelector('#exampletxt2')
+let exampleTxt3 = document.querySelector('#exampletxt3')
+let exampleTxt4 = document.querySelector('#exampletxt4')
+
+let txtSubmit = document.querySelector('.txtsubmit')
+let txtSubmit2 = document.querySelector('.txtsubmit2')
+let txtSubmit3 = document.querySelector('.txtsubmit3')
+let txtSubmit4 = document.querySelector('.txtsubmit4')
+
+async function runExample(){
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+  const promptclick = exampleTxt.innerHTML
+
+  const result = await model.generateContent(promptclick);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  userChat.innerHTML += promptclick
+  aiTxt.innerHTML += aiDiv(text)
+
+}
+
+async function runExample2(){
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+  const promptclick2 = exampleTxt2.innerHTML
+
+  const result = await model.generateContent(promptclick2);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  userChat.innerHTML += promptclick2
+  aiTxt.innerHTML += aiDiv(text)
+}
+
+async function runExample3(){
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+  const promptclick3 = exampleTxt3.innerHTML
+
+  const result = await model.generateContent(promptclick3);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  userChat.innerHTML += promptclick3
+  aiTxt.innerHTML += aiDiv(text)
+} 
+
+async function runExample4(){
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+  const promptclick4 = exampleTxt4.innerHTML
+
+  const result = await model.generateContent(promptclick4);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  userChat.innerHTML += promptclick4
+  aiTxt.innerHTML += aiDiv(text)
+}
+
+//Click example Txtsubmit
+txtSubmit.addEventListener('click', function(e){
+  e.preventDefault()
+
+  showLoading()
+    setTimeout(function(){
+hideLoading()
+runExample()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+    }, 2000)
+
+})
+
+
+//Txtsubmit2
+
+txtSubmit2.addEventListener('click', function(e){
+  e.preventDefault()
+
+  showLoading()
+    setTimeout(function(){
+hideLoading()
+runExample2()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+    }, 2000)
+
+})
+
+//Txtsubmit3
+
+txtSubmit3.addEventListener('click', function(e){
+  e.preventDefault()
+
+  showLoading()
+    setTimeout(function(){
+hideLoading()
+runExample3()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+    }, 2000)
+
+})
+
+//Txtsubmit4
+
+txtSubmit4.addEventListener('click', function(e){
+  e.preventDefault()
+
+  showLoading()
+    setTimeout(function(){
+hideLoading()
+runExample4()
+   document.querySelector('#myText').value = ''
+   document.querySelector('.card').style.display = 'block'
+   userChat.innerHTML = '' // clear user prompt of previous query
+   aiTxt.innerHTML = ''   // clear ai prompt of previous query
+    }, 2000)
+
+})
+
   </script>
   
+
+
+
   <header class="p-3 mb-3 border-bottom">
     <div class="container-fluid">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -125,8 +320,8 @@ run()
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
 
-        <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" aria-expanded="false">
-            <img src="happy-ai.png" alt="mdo" width="32" height="32" class="rounded-circle"> <b>Happy AI!</b>
+        <a href="#" class="navbar-brand d-block link-dark text-decoration-none" id="dropdownUser1" aria-expanded="false">
+            <img src="happy-ai.png" alt="mdo" width="50" height="50" class="rounded-circle"> <b>Happy AI!</b>
           </a>
 
 
@@ -136,8 +331,42 @@ run()
 
   <div class="container">
     <h1>
-Hello!  <small class="text-muted">How can I help?</small>
+Hello!  <span class="greet"></span> 
 </h1>
+<h1 class="typed-out"><span class="text-muted">How can I help you?</span></h1>
+<!-- Exampl prmopt  -->
+<div class="row">
+  <div class="col card-ai border-danger mb-3 hover-3">
+    <div class="card-body">
+
+<div id="exampletxt" class="txtsubmit">
+   <p class="typedtxt">Explain Qaunatum Physics</p>
+</div>
+</div>
+</div>
+<div class="col card-ai border-danger mb-3 hover-3">
+  <div class="card-body">
+<div id="exampletxt2" class="txtsubmit2">
+<p class="typedtxt">Write an email</p>
+</div>
+</div>
+</div>
+<div class="col card-ai border-danger mb-3 hover-3">
+  <div class="card-body">
+<div id="exampletxt3" class="txtsubmit3">
+  <p class="typedtxt">Create a budget friendly travel plan</p>
+  </div>
+  </div>
+</div>
+<div class="col card-ai border-danger mb-3 hover-3">
+  <div class="card-body">
+  <div id="exampletxt4" class="txtsubmit4">
+    <p class="typedtxt">List some power words to use on my resume that show teamwork.</p>
+    </div> 
+    </div>
+    </div>
+    </div>
+<!-- Exampl prmopt  -->
 
 <div class="spinner-grow" role="status">
   <span class="visually-hidden">Loading...</span>
@@ -154,18 +383,59 @@ Hello!  <small class="text-muted">How can I help?</small>
 
 <div class="mb-3">
 
-  <textarea name="text" class="form-control" id="myText"></textarea>
+  <textarea name="text" class="form-control" id="myText" placeholder="Type your prompt"></textarea>
 </div>
 
   <button type="submit" class="btn btn-danger btnsubmit">Submit</button><br>
 
   <p class="padding-top"><small class="text-muted">The information may be inaccurate. 
-    Please verify them before using. The query will be removed once you submit another one or refresh the page.</small></p>
+    Please verify them before using. The query will be removed once you type another one or refresh the page.</small></p>
 
 </div>
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="mb-1">&copy; <span id="year"></span> Happy AI. All Rights Reserved</p>
+        <div class="credits">
+          
+        </div>
+      </div>
+      <div class="col-sm-6 social text-md-end">
+        <!-- <a href="#"><span class="bi bi-twitter"></span></a>
+        <a href="#"><span class="bi bi-facebook"></span></a>
+        <a href="#"><span class="bi bi-instagram"></span></a> -->
+        <!-- <a href="https://www.linkedin.com/in/himansukumarnayak/" target="_blank"><span class="bi bi-linkedin"></span></a> -->
+      </div>
+    </div>
+  </div>
+</footer>
 
+<script>
+//Greetings
 
+let greet = document.querySelector('.greet')
 
+function greetings(){
+  let todaydate = new Date()
+  let hoursNow = todaydate.getHours()
+
+  if(hoursNow  < 12) {
+    greet.innerHTML = `Good Morning!`
+  }
+  else if(hoursNow < 18) {
+    greet.innerHTML = `Good Afternoon!`
+  }
+  else {
+    greet.innerHTML =  `Good Evening!`
+  }
+
+}
+
+greetings()
+
+  document.getElementById("year").innerHTML = new Date().getFullYear();
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
