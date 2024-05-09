@@ -72,6 +72,37 @@ p.typedtxt{
   --t: 0.3s;
   color: #fff;
 }
+.happyai-brand{
+  width: 70%;
+}
+
+/* Media query  */
+@media only screen and (max-width: 991px) {
+  .happyai-brand {
+    width: 93%;
+}
+  @keyframes typing {
+  from { width: 0 }
+  to { width: 35% }
+}
+@keyframes typingtext {
+  from { width: 0 }
+  to { width: 100% }
+} 
+}
+@media only screen and (max-width: 767px) {
+  .happyai-brand {
+    width: 70%;
+}
+  @keyframes typing {
+  from { width: 0 }
+  to { width: 90% }
+}
+@keyframes typingtext {
+  from { width: 0 }
+  to { width: 100% }
+}
+}
 </style>
 </head>
 <body>
@@ -320,7 +351,7 @@ runExample4()
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
 
-        <a href="#" class="navbar-brand d-block link-dark text-decoration-none" id="dropdownUser1" aria-expanded="false">
+        <a href="#" class="navbar-brand d-block link-dark text-decoration-none happyai-brand" id="dropdownUser1" aria-expanded="false">
             <img src="happy-ai.png" alt="mdo" width="50" height="50" class="rounded-circle"> <b>Happy AI!</b>
           </a>
 
